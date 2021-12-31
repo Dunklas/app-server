@@ -1,0 +1,20 @@
+name: Deploy server
+on: push
+env:
+  TF_STATE_BUCKET: appserver-tfstate
+  TF_STATE_KEY: appserver.tfstate
+  TF_STATE_REGION: eu-west-2
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: iac
+    steps:
+      - uses: actions/checkout@v2
+      - name: terraform init
+        run: |
+          terraform init -input=false \
+            -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ env.TF_STATE_KEY }}" \
+            -backend-config="region=${{ env.TF_STATE_REGION }}"

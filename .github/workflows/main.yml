@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
-      - run: mkdir -p /etc/ansible
-      - run: echo ${{ needs.deploy.outputs.ip }} >> /etc/ansible/hosts
-      - run: cat /etc/ansible/hosts
+      - uses: actions/checkout@v2
+      - run: echo ${{ needs.deploy.outputs.ip }} >> inventory.ansible
+      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ssh.key
+      - run: ansible all --private-key ssh.key -i inventory.ansible -m ping -u ubuntu

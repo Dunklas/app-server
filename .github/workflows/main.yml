@@ -10,6 +10,8 @@ jobs:
     defaults:
       run:
         working-directory: iac
+    outputs:
+      ip: ${{ steps.obtain_ip.outputs.ip }}
     steps:
       - uses: actions/checkout@v2
       - name: terraform init
@@ -25,6 +27,7 @@ jobs:
       - name: terraform apply
         run: terraform apply -input=false tfplan
       - name: obtain ip
+        id: obtain_ip
         run: |
           SERVER_IP=$(terraform output -raw server_ip)
           echo "::set-output name=ip::$SERVER_IP"

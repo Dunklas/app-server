@@ -35,4 +35,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
-      - run: echo ${{ needs.deploy.outputs.ip }}
+      - run: echo ${{ needs.deploy.outputs.ip }} >> /etc/ansible/hosts
+      - run: cat /etc/ansible/hosts

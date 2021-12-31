@@ -5,8 +5,10 @@ Infrastructure is defined with Terraform.
 
 ## First time deploy
 
-With the deployed infrastructure, I also define a public key which will have access to ssh into the machine.
-The public key is currently hardcoded into the terraform configuration. Therefore, on first deployment (and if you lose the corresponding private key), you will need to generate a key pair, and update the public key in the `aws_key_pair` resource.
+Before running the pipeline for this repository, there are some things you must do.
 
-To generate a new key pair, run:
-- `ssh-keygen -m PEM`.
+ - Make sure an S3 bucket exist for storing terraform state, and that the bucket name is defined as TF_STATE_BUCKET in the [pipeline](.github/workflows.main.yml)
+ - Make sure repository secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` exist, and corresponds to an account with access to above created S3 bucket, and to deploy infrastructure (these credentials will be used by terraform)
+ - Create a key pair, and add the public key to the `aws_key_pair` resource in [main.tf](iac/main.tf) (the corresponding private key will have access to ssh into the machine)
+
+Now you can run the pipeline.

@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AWS_DEFAULT_REGION: eu-west-2
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
         working-directory: iac
@@ -18,8 +20,6 @@ jobs:
         env:
           TF_STATE_BUCKET: appserver-tfstate
           TF_STATE_KEY: appserver.tfstate
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: terraform plan
         run: terraform plan -out=tfplan -input=false
       - name: terraform apply

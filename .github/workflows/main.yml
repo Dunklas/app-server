@@ -34,9 +34,13 @@ jobs:
   configure:
     runs-on: ubuntu-latest
     needs: deploy
+    defaults:
+      run:
+        working-directory: playbooks
     steps:
       - uses: actions/checkout@v2
       - run: echo ${{ needs.deploy.outputs.ip }} >> inventory.ansible
       - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ssh.key
       - run: chmod 600 ssh.key
       - run: ANSIBLE_HOST_KEY_CHECKING=false ansible all --private-key ssh.key -i inventory.ansible -m ping -u ubuntu
+      - run: ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory.ansible -u ubuntu --private-key 

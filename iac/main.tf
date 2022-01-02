@@ -54,7 +54,7 @@ resource "aws_iam_role_policy" "docker_pull_policy" {
   "Statement": [
     {
       "Action": [
-        "ecr:GetAuthorizationToken"
+        "ecr:GetAuthorizationToken",
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:GetRepositoryPolicy",
@@ -65,7 +65,7 @@ resource "aws_iam_role_policy" "docker_pull_policy" {
       ],
       "Effect": "Allow",
       "Resource": "*"
-    },
+    }
   ]
 }
 EOF

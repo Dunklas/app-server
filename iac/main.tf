@@ -26,15 +26,6 @@ resource "aws_iam_instance_profile" "app_server_profile" {
   role = aws_iam_role.docker_pull_role.name
 }
 
-resource "aws_ecr_repository" "ecr_registry" {
-  name                 = "dunk-ecr"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-
 resource "aws_iam_role" "docker_pull_role" {
   name               = "docker-pull"
   assume_role_policy = <<EOF
@@ -63,6 +54,7 @@ resource "aws_iam_role_policy" "docker_pull_policy" {
   "Statement": [
     {
       "Action": [
+        "ecr:GetAuthorizationToken",
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:GetRepositoryPolicy",
@@ -70,13 +62,6 @@ resource "aws_iam_role_policy" "docker_pull_policy" {
         "ecr:ListImages",
         "ecr:DescribeImages",
         "ecr:BatchGetImage"
-      ],
-      "Effect": "Allow",
-      "Resource": "${aws_ecr_repository.ecr_registry.arn}"
-    },
-    {
-      "Action": [
-        "ecr:GetAuthorizationToken"
       ],
       "Effect": "Allow",
       "Resource": "*"

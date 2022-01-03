@@ -21,12 +21,12 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_route53_record" "dns_record" {
-  count   = "${var.hosted_zone_id != "" && var.sub_domain != "" ? 1 : 0}"
-  zone_id = var.hosted_zone_id
-  name    = var.sub_domain
-  type    = "A"
-  ttl     = "300"
-  records = [aws_eip.ip.public_ip]
+  for_each = toset(var.sub_domains)
+  zone_id  = var.hosted_zone_id
+  name     = each.value
+  type     = "A"
+  ttl      = "300"
+  records  = [aws_eip.ip.public_ip]
 }
 
 resource "aws_key_pair" "deployer" {
@@ -53,6 +53,24 @@ resource "aws_security_group" "sg" {
     ]
     from_port = 22
     to_port   = 22
+    protocol  = "tcp"
+  }
+
+  ingress {
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+  }
+
+  ingress {
+    cidr_blocks = [
+      "0.0.0.0/0"
+    ]
+    from_port = 80
+    to_port   = 80
     protocol  = "tcp"
   }
 

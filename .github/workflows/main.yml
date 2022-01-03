@@ -106,6 +106,7 @@ jobs:
           if [ -e nginx.conf ]; then mv nginx.conf nginx.conf.bak; fi;
           python3 generate-conf.py
           docker context ls
+          docker-compose ls
           docker-compose up --build -d
         working-directory: frontman
       ## - name: Start reverse proxy

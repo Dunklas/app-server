@@ -1,4 +1,6 @@
 - hosts: all
+  become: yes
+  gather_facts: false
   tasks:
-    - include: docker-install.yml
-    - include: make-install.yml
+    - import_tasks: docker-install.yml
+    - import_tasks: make-install.yml

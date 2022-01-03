@@ -20,7 +20,7 @@ resource "aws_instance" "app_server" {
   subnet_id              = aws_subnet.subnet.id
 }
 
-resource "aws_route53_record" "www" {
+resource "aws_route53_record" "dns_record" {
   count   = "${var.hosted_zone_id != "" && var.sub_domain != "" ? 1 : 0}"
   zone_id = var.hosted_zone_id
   name    = var.sub_domain

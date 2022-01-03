@@ -1,0 +1,11 @@
+- become: yes
+  gather_facts: false
+  tasks:
+  - name: Install build-essentials
+    remote_user: ubuntu
+    apt:
+      name: build-essentials
+      state: present
+      update_cache: yes
+    tags:
+      - make

@@ -95,8 +95,6 @@ jobs:
         run: mkdir ~/.ssh && echo -e "Host ${{ env.SERVER_IP }}\n\tStrictHostKeyChecking no" > ~/.ssh/config
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
-      - name: Set docker context
-        run: docker context use remote
       - name: Start reverse proxy
-        run: make start
+        run: DOCKER_CONTEXT=remote make start
         working-directory: frontman

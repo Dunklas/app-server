@@ -1,4 +1,4 @@
-- name: Install build-essentials
+- name: Install make
   remote_user: ubuntu
   apt:
     name: make

@@ -4,6 +4,7 @@ on:
     branches:
       - main
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
     env:
@@ -34,7 +35,8 @@ jobs:
         run: |
           SERVER_IP=$(terraform output -raw server_ip)
           echo "::set-output name=ip::$SERVER_IP"
-  configure:
+
+  configure-server:
     runs-on: ubuntu-latest
     needs: deploy
     defaults:
@@ -43,11 +45,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo ${{ needs.deploy.outputs.ip }} >> inventory.ansible
-      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ssh.key
-      - run: chmod 600 ssh.key
+      - name: Setup SSH key
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< $(echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d)
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       - run: |
           ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook \
             --inventory inventory.ansible \
             --user ubuntu \
-            --private-key ssh.key \
             docker-install.yml
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+  
+  configure-proxy:
+    runs-on: ubuntu-latest
+    needs: configure-server
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo HELO

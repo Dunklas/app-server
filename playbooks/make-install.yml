@@ -1,7 +1,7 @@
 - name: Install build-essentials
   remote_user: ubuntu
   apt:
-    name: build-essentials
+    name: make
     state: present
     update_cache: yes
   tags:

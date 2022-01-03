@@ -96,8 +96,12 @@ jobs:
         run: mkdir ~/.ssh && ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
+      - name: Use remote docker context
+        run: docker context use remote
+      - name: Show running containers
+        run: docker ps
       - name: Docker info
         run: docker info
       - name: Start reverse proxy
-        run: DOCKER_HOST=ssh://ubuntu@${{ env.SERVER_IP }} make start
+        run: make start
         working-directory: frontman

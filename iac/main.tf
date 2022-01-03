@@ -21,7 +21,7 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_route53_record" "www" {
-  count   = var.hosted_zone_id && var.sub_domain ? 1 : 0
+  count   = "${var.hosted_zone_id != "" && var.sub_domain != "" ? 1 : 0}"
   zone_id = var.hosted_zone_id
   name    = var.sub_domain
   type    = "A"

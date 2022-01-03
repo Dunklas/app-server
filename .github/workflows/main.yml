@@ -99,5 +99,5 @@ jobs:
       - name: Docker info
         run: docker info
       - name: Start reverse proxy
-        run: DOCKER_HOST=${{ env.SERVER_IP }} make start
+        run: DOCKER_HOST=ssh://ubuntu@${{ env.SERVER_IP }} make start
         working-directory: frontman

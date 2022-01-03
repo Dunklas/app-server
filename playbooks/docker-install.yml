@@ -58,8 +58,9 @@
 - name: Install docker-compose
   remote_user: ubuntu
   get_url: 
-    url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+    url : https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
     owner: ubuntu
     group: docker
     mode: 'u+x,g+x'
+    force: true

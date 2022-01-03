@@ -1,5 +1,4 @@
-- hosts: all
-  become: yes
+- become: yes
   gather_facts: false
   tasks:
   - name: Install docker packages

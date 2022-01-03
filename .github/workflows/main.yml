@@ -55,7 +55,7 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook \
             --inventory inventory.ansible \
             --user ubuntu \
-            docker-install.yml
+            main.yml
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   

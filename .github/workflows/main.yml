@@ -102,6 +102,11 @@ jobs:
         run: docker ps
       - name: Docker info
         run: docker info
-      - name: Start reverse proxy
-        run: make start
+      - run: |
+          if [ -a nginx.conf ]; then mv nginx.conf nginx.conf.bak; fi;
+          python3 generate-conf.py
+          docker-compose up --build -d
         working-directory: frontman
+      ## - name: Start reverse proxy
+        ## run: make start
+        # working-directory: frontman

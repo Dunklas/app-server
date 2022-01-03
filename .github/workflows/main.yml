@@ -82,7 +82,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
-          repository: Sundin/frontman
+          repository: Dunklas/frontman
+          ref: docker-contexts
           path: frontman
         name: Checkout frontman
       - run: cp servers.json frontman/

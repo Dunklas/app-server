@@ -96,5 +96,5 @@ jobs:
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
       - name: Start reverse proxy
-        run: DOCKER_CONTEXT=remote make start
+        run: make context=remote start
         working-directory: frontman

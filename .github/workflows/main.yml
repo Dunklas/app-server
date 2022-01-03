@@ -101,5 +101,5 @@ jobs:
       - name: Docker info
         run: docker info
       - name: Start reverse proxy
-        run: make start
+        run: DOCKER_HOST=${{ env.SERVER_IP }} make start
         working-directory: frontman

@@ -63,3 +63,4 @@
     owner: ubuntu
     group: docker
     mode: 'u+x,g+x'
+    force: true

@@ -32,12 +32,12 @@ jobs:
         run: |
           terraform plan \
             -var="hosted_zone_id=${{ env.HOSTED_ZONE_ID }}" \
-            -var="sub_domain=${{ env.SUB_DOMAIN }}" \
+            -var='sub_domains=${{ env.SUB_DOMAIN }}' \
             -out=tfplan \
             -input=false
         env:
           HOSTED_ZONE_ID: Z01458071JP9I1MITIR07
-          SUB_DOMAIN: apps
+          SUB_DOMAIN: '[ "hiveshop" ]'
       - name: terraform apply
         run: |
           terraform apply \

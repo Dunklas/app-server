@@ -3,7 +3,7 @@ variable "hosted_zone_id" {
   default = ""
 }
 
-variable "sub_domain" {
-  type = string
-  default = ""
+variable "sub_domains" {
+  type = list
+  default = []
 }

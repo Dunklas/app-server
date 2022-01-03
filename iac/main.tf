@@ -21,9 +21,10 @@ resource "aws_instance" "app_server" {
 }
 
 resource "aws_route53_record" "dns_record" {
-  count   = "${var.hosted_zone_id != "" && var.sub_domain != "" ? 1 : 0}"
+  count   = "${var.hosted_zone_id != "" ? 1 : 0}"
+  for_each = toset(var.sub_domains)
   zone_id = var.hosted_zone_id
-  name    = var.sub_domain
+  name    = each.value
   type    = "A"
   ttl     = "300"
   records = [aws_eip.ip.public_ip]

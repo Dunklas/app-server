@@ -60,17 +60,13 @@ jobs:
       - run: echo ${{ needs.deploy.outputs.ip }} >> inventory.ansible
       - name: Setup SSH key
         run: |
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-agent
           ssh-add - <<< $(echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d)
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       - run: |
           ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook \
             --inventory inventory.ansible \
             --user ubuntu \
             main.yml
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
   
   configure-proxy:
     runs-on: ubuntu-latest

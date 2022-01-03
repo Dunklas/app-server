@@ -84,7 +84,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
-          repository: Dunklas/frontman
+          repository: Sundin/frontman
           path: frontman
         name: Checkout frontman
       - run: cp servers.json frontman/
@@ -96,6 +96,8 @@ jobs:
         run: mkdir ~/.ssh && ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
+      - name: Use remote docker context
+        run: docker context use remote
       - name: Start reverse proxy
-        run: make context=remote start
+        run: make start
         working-directory: frontman

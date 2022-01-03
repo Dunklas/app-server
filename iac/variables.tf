@@ -1,9 +1,9 @@
 variable "hosted_zone_id" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "sub_domains" {
-  type = list
+  type    = list(any)
   default = []
 }

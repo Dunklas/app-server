@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
-          repository: Sundin/frontman
+          repository: Dunklas/frontman
           path: frontman
         name: Checkout frontman
       - run: cp servers.json frontman/
@@ -94,12 +94,6 @@ jobs:
         run: mkdir ~/.ssh && echo -e "Host ${{ env.SERVER_IP }}\n\tStrictHostKeyChecking no" > ~/.ssh/config
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
-      - name: Backup nginx config
-        run: |
-          if [ -a nginx.conf ]; then mv nginx.conf nginx.conf.bak; fi;
-          python3 generate-conf.py
-          docker-compose up --build -d
-        working-directory: frontman
       - name: Start reverse proxy
-        run: docker-compose --context remote up --build --detach
+        run: make context=remote start
         working-directory: frontman

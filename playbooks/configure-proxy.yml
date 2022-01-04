@@ -23,6 +23,8 @@
   make:
     chdir: /tmp/frontman
     target: generate-certs
+  register: out
+- debug: var=out.stdout_lines
 - name: Start frontman
   remote_user: ubuntu
   make:

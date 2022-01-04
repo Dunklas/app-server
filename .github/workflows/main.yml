@@ -85,6 +85,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: Dunklas/frontman
+          ref: certbot
           path: frontman
         name: Checkout frontman
       - run: cp servers.json frontman/

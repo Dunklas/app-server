@@ -1,10 +1,11 @@
 - name: Clone frontman
   remote_user: ubuntu
   git:
-    repo: https://github.com/Sundin/frontman
+    repo: https://github.com/Dunklas/frontman
     dest: /tmp/frontman
     clone: yes
     update: yes
+    version: certbot
 - name: Copy servers.json
   remote_user: ubuntu
   copy:
@@ -12,6 +13,16 @@
     dest: /tmp/frontman
     owner: ubuntu
     mode: u=r,g=r,o=r
+- name: Stop frontman
+  remote_user: ubuntu
+  make:
+    chdir: /tmp/frontman
+    target: stop
+- name: Generate HTTPS certificates
+  remote_user: ubuntu
+  make:
+    chdir: /tmp/frontman
+    target: generate-certs
 - name: Start frontman
   remote_user: ubuntu
   make:

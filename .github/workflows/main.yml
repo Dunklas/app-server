@@ -99,6 +99,7 @@ jobs:
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
       - name: Stop reverse proxy
         run: make context=remote stop
+        working-directory: frontman
       - name: Run certbot
         run: make certbot
         working-directory: frontman

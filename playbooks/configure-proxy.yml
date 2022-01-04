@@ -1,0 +1,7 @@
+- name: Clone frontman
+  remote_user: ubuntu
+  git:
+    repo: https://github.com/Dunklas/frontman
+    dest: /tmp/frontman
+    clone: yes
+    update: yes

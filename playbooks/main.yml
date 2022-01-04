@@ -4,3 +4,4 @@
   tasks:
     - import_tasks: docker-install.yml
     - import_tasks: make-install.yml
+    - import_tasks: configure-proxy.yml

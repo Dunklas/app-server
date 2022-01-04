@@ -97,6 +97,8 @@ jobs:
         run: mkdir ~/.ssh && ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
       - name: Setup docker context
         run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
+      - name: Stop reverse proxy
+        run: make context=remote stop
       - name: Run certbot
         run: make certbot
         working-directory: frontman

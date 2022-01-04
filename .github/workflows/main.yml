@@ -100,10 +100,8 @@ jobs:
       - name: Stop reverse proxy
         run: make context=remote stop
         working-directory: frontman
-      - name: Set active docker context
-        run: docker context use remote
       - name: Run certbot
-        run: make certbot
+        run: make context=remote certbot
         working-directory: frontman
       - name: Start reverse proxy
         run: make context=remote start

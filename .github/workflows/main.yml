@@ -82,15 +82,27 @@ jobs:
       SERVER_IP: ${{ needs.deploy.outputs.ip }}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: Dunklas/frontman
+          ref: certbot
+          path: frontman
+        name: Checkout frontman
+      - run: cp servers.json frontman/
       - name: Setup SSH key
         run: |
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< $(echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d)
       - name: Add server to known hosts
         run: mkdir ~/.ssh && ssh-keyscan -H ${{ env.SERVER_IP }} >> ~/.ssh/known_hosts
-      - name: Copy files to server
-        run: |
-          scp servers.json ubuntu@${{ env.SERVER_IP }}:/tmp
-          scp start-frontman.sh ubuntu@${{ env.SERVER_IP }}:/tmp
-      - name: Start frontman
-        run: ssh ubuntu@${{ env.SERVER_IP }} '/tmp/start-frontman.sh'
+      - name: Setup docker context
+        run: docker context create remote --docker "host=ssh://ubuntu@${{ env.SERVER_IP }}"
+      - name: Stop reverse proxy
+        run: make context=remote stop
+        working-directory: frontman
+      - name: Run certbot
+        run: make context=remote certbot
+        working-directory: frontman
+      - name: Start reverse proxy
+        run: make context=remote start
+        working-directory: frontman

@@ -12,3 +12,8 @@
     dest: /tmp/frontman
     owner: ubuntu
     mode: u=r,g=r,o=r
+- name: Start frontman
+  remote_user: ubuntu
+  make:
+    chdir: /tmp/frontman
+    target: start

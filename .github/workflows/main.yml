@@ -82,6 +82,9 @@ jobs:
       SERVER_IP: ${{ needs.deploy.outputs.ip }}
     steps:
       - uses: actions/checkout@v2
+      - run: docker-compose --version
+      - run: sudo pip install docker-compose
+      - run: docker-compose --version
       - uses: actions/checkout@v2
         with:
           repository: Dunklas/frontman

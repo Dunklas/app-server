@@ -5,3 +5,10 @@
     dest: /tmp/frontman
     clone: yes
     update: yes
+- name: Copy servers.json
+  remote_user: ubuntu
+  copy:
+    src: ../servers.json
+    dest: /tmp/frontman
+    owner: ubuntu
+    mode: u=r,g=r,o=r

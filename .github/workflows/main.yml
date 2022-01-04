@@ -103,6 +103,8 @@ jobs:
       - name: Stop reverse proxy
         run: make context=remote stop
         working-directory: frontman
+      - name: Restart docker
+        run: ssh ubuntu@${{ env.SERVER_IP }} 'sudo service docker restart'
       - name: Run certbot
         run: make context=remote certbot
         working-directory: frontman

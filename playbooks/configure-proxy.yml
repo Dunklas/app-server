@@ -12,6 +12,7 @@
         dest: /tmp/frontman
         clone: yes
         update: yes
+        umask: ug=rwx,o=r
         version: certbot-v2
     - name: Copy servers.json
       copy:

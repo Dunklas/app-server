@@ -49,4 +49,4 @@
   cron:
     name: Renew HTTPS certificates
     job: "cd /tmp/frontman && make stop && make renew-certs; make start"
-    minute: */5
+    minute: "*/5"

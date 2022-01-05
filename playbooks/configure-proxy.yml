@@ -54,4 +54,4 @@
     name: renew-certs
     user: ubuntu
     job: "(PATH=$PATH:/usr/local/bin && cd /tmp/frontman && make stop && make renew-certs; make start) > ~/cert-renew.log 2>&1"
-    minute: "*/5"
+    minute: "*/30"

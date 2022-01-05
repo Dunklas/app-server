@@ -1,6 +1,6 @@
 - hosts: all
-  become: yes
   gather_facts: false
   tasks:
     - import_tasks: docker-install.yml
     - import_tasks: make-install.yml
+    - import_tasks: configure-proxy.yml

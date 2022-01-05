@@ -1,0 +1,56 @@
+- name: Setup frontman
+  remote_user: ubuntu
+  become_user: ubuntu
+  block:
+    - name: Remove existing dir
+      file:
+        state: absent
+        path: /tmp/frontman
+    - name: Clone frontman
+      git:
+        repo: https://github.com/Dunklas/frontman
+        dest: /tmp/frontman
+        clone: yes
+        update: yes
+        umask: "003" # ug=rwx,o=r
+        version: master
+    - name: Copy servers.json
+      copy:
+        src: ../servers.json
+        dest: /tmp/frontman
+        owner: ubuntu
+        mode: u=r,g=r,o=r
+
+- name: Validate HTTPS certificates
+  remote_user: ubuntu
+  become_user: ubuntu
+  block:
+    - name: Validate certs
+      make:
+        chdir: /tmp/frontman
+        target: validate-certs
+  rescue:
+    - name: Stop frontman
+      make:
+        chdir: /tmp/frontman
+        target: stop
+    - name: Generate HTTPS certificates
+      make:
+        chdir: /tmp/frontman
+        target: generate-certs
+      register: out
+    - debug: var=out.stdout_lines
+    - name: Start frontman
+      make:
+        chdir: /tmp/frontman
+        target: start
+
+- name: Schedule certificate renewal
+  remote_user: ubuntu
+  become_user: ubuntu
+  cron:
+    name: renew-certs
+    user: ubuntu
+    job: "(PATH=$PATH:/usr/local/bin && cd /tmp/frontman && make stop && make renew-certs; make start) > ~/cert-renew.log 2>&1"
+    minute: "0"
+    hour: "*/12"

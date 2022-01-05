@@ -49,5 +49,5 @@
   cron:
     name: renew-certs
     user: ubuntu
-    job: "(cd /tmp/frontman && make stop && make renew-certs; make start) > /var/log/cert-renew.log 2>&1"
+    job: "(cd /tmp/frontman && make stop && make renew-certs; make start) > ~/cert-renew.log 2>&1"
     minute: "*/5"

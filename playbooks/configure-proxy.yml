@@ -26,6 +26,7 @@
         target: validate-certs
       register: validation
       ignore_errors: yes
+    - debug: var=validation
 
 - name: Generate HTTPS certificates
   when: validation.rc != 0

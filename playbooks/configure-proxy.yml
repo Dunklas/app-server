@@ -21,6 +21,7 @@
         chdir: /tmp/frontman
         target: validate-certs
       register: validation
+      ignore_errors: yes
 - name: Generate HTTPS certificates
   when: validation.rc != 0
   block:

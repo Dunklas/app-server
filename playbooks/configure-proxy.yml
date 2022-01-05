@@ -1,5 +1,9 @@
 - name: Setup frontman
   block:
+    - name: Remove existing dir
+      file:
+        state: absent
+        path: /tmp/frontman
     - name: Clone frontman
       remote_user: ubuntu
       git:

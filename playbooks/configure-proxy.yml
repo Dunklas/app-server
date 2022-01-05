@@ -22,6 +22,7 @@
         target: validate-certs
       register: validation
       ignore_errors: yes
+
 - name: Generate HTTPS certificates
   when: validation.rc != 0
   block:
@@ -42,3 +43,10 @@
       make:
         chdir: /tmp/frontman
         target: start
+
+- name: Schedule certificate renewal
+  remote_user: ubuntu
+  cron:
+    name: Renew HTTPS certificates
+    job: "cd /tmp/frontman && make stop && make renew-certs; make start"
+    minute: */5

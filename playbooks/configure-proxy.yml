@@ -47,6 +47,7 @@
 - name: Schedule certificate renewal
   remote_user: ubuntu
   cron:
-    name: Renew HTTPS certificates
+    name: renew-certs
+    user: ubuntu
     job: "cd /tmp/frontman && make stop && make renew-certs; make start"
     minute: "*/5"

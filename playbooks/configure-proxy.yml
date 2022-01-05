@@ -20,19 +20,16 @@
         dest: /tmp/frontman
         owner: ubuntu
         mode: u=r,g=r,o=r
+
+- name: Validate HTTPS certificates
+  remote_user: ubuntu
+  become_user: ubuntu
+  block:
     - name: Validate certs
       make:
         chdir: /tmp/frontman
         target: validate-certs
-      register: validation
-      ignore_errors: yes
-    - debug: var=validation
-
-- name: Generate HTTPS certificates
-  when: validation.rc != 0
-  remote_user: ubuntu
-  become_user: ubuntu
-  block:
+  rescue:
     - name: Stop frontman
       make:
         chdir: /tmp/frontman

@@ -23,9 +23,11 @@
 
 - name: Validate HTTPS certificates
   remote_user: ubuntu
-  become_user: root # Needed to read certs in /etc/letsencrypt/live/*
+  become_user: ubuntu
   block:
     - name: Validate certs
+      become_user: root
+      become: yes # Needed to read certs in /etc/letsencrypt/live/*
       make:
         chdir: /tmp/frontman
         target: validate-certs

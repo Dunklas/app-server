@@ -30,8 +30,8 @@ resource "aws_route53_record" "dns_record" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKI/RAhuoRajVLgMPvTpKhLmmkykUfDFINPEOl4LKevX+dNfNao2Nc7u56CXHNX+Ps9DwTTIivMD/cFbcFwSLFwLWKvFPvaQrSDyFT6CERgJ6C7qaddQhPvCP1XJG7etMZu9H/l0XqcC/8Z7CRZhIxGXzL6xfLd9zU++nmFC/fkHFGhea9MqEMOXnU9inyYMmq7dX4u+WBLXfkMBjFYhmFOKjFsEwSc4n+wtVVxZrZdZ6R3K9ej4u6oPoqcmZwsBWo/fDQjhqn20Q8BCBl6Si6dXyevD3K9vidyB3vjthMczR+MFa/KexHY3kdUi+PSpAzMWAinTMGiY5qpdngeYWxDe4Ty74gsvrgM+D02pWJ361THPIbSn3Gdpj8Tx2meYi+pmZ2AK/I/wju9ce7++8F2KkMZ+rt15rV7vfUndlKhwKgwzRRFSiecWsVvm2U0iVKSnt71kmUZfuIacza404ldqjGv3GmzSlRD0rOIOpjPGJ1jsWJBERTcnEeGJdq9jM= rickard@dunkStation"
+  key_name   = var.key_pair_name
+  public_key = var.key_pair_public_key
 }
 
 resource "aws_eip" "ip" {

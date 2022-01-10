@@ -20,8 +20,10 @@ Now you can run the pipeline.
 To add a new service to the server:
 
 1. Start a docker container for the service on the app-server
-    - Preferably from a pipeline, in the git repository of that service
     - Make sure the docker container is exposed on a port that isn't already used by some other service
 2. Add a subdomain to the `SUB_DOMAINS` environment variable in [main.yml](.github/workflows/main.yml)
     - This will deploy a DNS record for the service in my Route53 hosted zone
 3. Update `servers.json` with a new entry, where the upstream port is the port that the docker container exposes
+    - This file is parsed in pipeline, in order to have terraform create a DNS record for it
+    - If HTTPS: This file is also used in pipeline to have automatically get HTTPS certificates from letsencrypt
+    - If HTTPS: Additionally, it's used by Frontman to generate nginx configuration

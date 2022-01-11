@@ -1,7 +1,6 @@
 # app-server
 
-Contains infrastructure, etc for my EC2 server where I host personal projects.
-Infrastructure is defined with Terraform.
+Contains terraform configuration and ansible playbooks used to deploy and configure my EC2 server where I host personal projects.
 
 ## First time deploy
 

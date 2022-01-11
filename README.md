@@ -2,6 +2,8 @@
 
 Contains terraform configuration and ansible playbooks used to deploy and configure my EC2 server where I host personal projects.
 
+There is a single [github actions workflow](.github/workflows/main.yml) which both deploys infrastructure and performs server configuration. This workflow is triggered on push to main, or manually against a given branch.
+
 ## First time deploy
 
 Before running the pipeline for this repository, there are some things you must do.

@@ -3,6 +3,7 @@
   become_user: ubuntu
   block:
     - name: Remove existing dir
+      become: yes
       file:
         state: absent
         path: /tmp/frontman
@@ -26,7 +27,6 @@
   become_user: ubuntu
   block:
     - name: Validate certs
-      become_user: root
       become: yes # Needed to read certs in /etc/letsencrypt/live/*
       make:
         chdir: /tmp/frontman

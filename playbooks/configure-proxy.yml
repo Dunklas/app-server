@@ -3,6 +3,7 @@
   become_user: ubuntu
   block:
     - name: Remove existing dir
+      become: yes
       file:
         state: absent
         path: /tmp/frontman

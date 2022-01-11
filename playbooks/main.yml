@@ -1,5 +1,6 @@
 - hosts: all
   gather_facts: false
+  remote_user: ubuntu
   tasks:
     - import_tasks: docker-install.yml
     - import_tasks: make-install.yml

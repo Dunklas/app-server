@@ -1,7 +1,5 @@
 - name: Install docker
-  remote_user: ubuntu
   become: yes
-  become_user: root
   block:
     - name: Install docker packages
       apt:

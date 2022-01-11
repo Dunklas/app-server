@@ -1,7 +1,5 @@
 - name: Install make
-  remote_user: ubuntu
   become: yes
-  become_user: root
   apt:
     name: make
     state: present

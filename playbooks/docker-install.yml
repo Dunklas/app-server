@@ -62,3 +62,6 @@
         group: docker
         mode: 'u+x,g+x'
         force: true
+    - name: Initialize single node swarm
+      shell:
+        cmd: docker swarm init

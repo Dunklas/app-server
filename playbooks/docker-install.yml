@@ -65,7 +65,7 @@
     - name: Initialize single node swarm
       shell:
         cmd: |
-          if [ "$(docker info --format '{{.Swarm.ControlAvailable}}')" != "active" ];
+          if [ "$(docker info --format '{{.Swarm.ControlAvailable}}')" == "false" ];
           then
             docker swarm init;
           fi

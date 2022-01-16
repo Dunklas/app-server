@@ -65,7 +65,7 @@
 - name: Initialize single node swarm
   block:
     - name: Validate that server is manager node
-      shell: 'test $(docker info --format "{{\.Swarm\.ControlAvailable}}") = true'
+      shell: test $(docker info --format \{\{'.Swarm.ControlAvailable'\}\}) = true
   rescue:
     - name: Initialize single node swarm
       command: docker swarm init

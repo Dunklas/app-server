@@ -62,10 +62,10 @@
         group: docker
         mode: 'u+x,g+x'
         force: true
+- name: Initialize single node swarm
+  block:
+    - name: Validate that server is manager node
+      command: test "$(docker info --format '{{.Swarm.ControlAvailable}}')" = "true"
+  rescue:
     - name: Initialize single node swarm
-      shell:
-        cmd: |
-          if [ "$(docker info --format '{{.Swarm.ControlAvailable}}')" == "false" ];
-          then
-            docker swarm init;
-          fi
+      command: docker swarm init

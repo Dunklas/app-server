@@ -3,5 +3,10 @@
         "server_name": "hiveshop.rdunk.net",
         "upstream_port": "8000",
         "https": true
+    },
+    {
+        "server_name": "alamen.rdunk.net",
+        "upstream_port": "8001",
+        "https": true
     }
 ]

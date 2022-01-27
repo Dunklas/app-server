@@ -12,7 +12,7 @@
         clone: yes
         update: yes
         umask: "003" # ug=rwx,o=r
-        version: master
+        version: multiple-certs
     - name: Copy servers.json
       copy:
         src: ../servers.json
@@ -33,6 +33,7 @@
         chdir: /tmp/frontman
         target: stop
     - name: Generate HTTPS certificates
+      become: yes
       make:
         chdir: /tmp/frontman
         target: generate-certs

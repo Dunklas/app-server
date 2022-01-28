@@ -7,12 +7,12 @@
         path: /tmp/frontman
     - name: Clone frontman
       git:
-        repo: https://github.com/Dunklas/frontman
+        repo: https://github.com/DeviesDevelopment/frontman
         dest: /tmp/frontman
         clone: yes
         update: yes
         umask: "003" # ug=rwx,o=r
-        version: master
+        version: certbot-make-targets
     - name: Copy servers.json
       copy:
         src: ../servers.json

@@ -54,4 +54,4 @@
       shell: test $(docker info --format \{\{'.Swarm.ControlAvailable'\}\}) = true
   rescue:
     - name: Initialize single node swarm
-      command: docker swarm init
+      command: docker swarm init --default-addr-pool 192.168.0.0/16 ## Default range may conflict with ec2 dns

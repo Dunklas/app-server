@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = "ami-0d19fa6f37a659a28"
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.deployer.id
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
@@ -106,20 +106,4 @@ resource "aws_vpc" "vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
-}
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
 }
